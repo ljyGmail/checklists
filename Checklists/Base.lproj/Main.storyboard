@@ -16,27 +16,42 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="ChecklistItem" id="UCS-OD-xCC">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="ChecklistItem" id="UCS-OD-xCC">
                                 <rect key="frame" x="0.0" y="50" width="320" height="45"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="UCS-OD-xCC" id="HHh-8U-dBO">
-                                    <rect key="frame" x="0.0" y="0.0" width="280" height="45"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="261.5" height="45"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="√" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pw7-6C-h8w">
+                                            <rect key="frame" x="16" y="5" width="22" height="27.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="22" id="YnC-pi-2yX"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="22"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SI7-DH-ofP">
-                                            <rect key="frame" x="16" y="11" width="256" height="21.5"/>
+                                            <rect key="frame" x="59" y="11" width="195" height="22.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="SI7-DH-ofP" firstAttribute="leading" secondItem="HHh-8U-dBO" secondAttribute="leadingMargin" id="4kq-ps-zpG"/>
-                                        <constraint firstItem="SI7-DH-ofP" firstAttribute="top" secondItem="HHh-8U-dBO" secondAttribute="topMargin" id="RsM-DC-rl4"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="SI7-DH-ofP" secondAttribute="bottom" constant="1.5" id="wGr-ns-OEN"/>
-                                        <constraint firstItem="SI7-DH-ofP" firstAttribute="trailing" secondItem="HHh-8U-dBO" secondAttribute="trailingMargin" id="xt7-H2-kBb"/>
+                                        <constraint firstAttribute="bottom" secondItem="Pw7-6C-h8w" secondAttribute="bottom" constant="12.5" id="8dq-vy-wTS"/>
+                                        <constraint firstItem="Pw7-6C-h8w" firstAttribute="leading" secondItem="HHh-8U-dBO" secondAttribute="leading" constant="16" id="C8Z-6R-EKp"/>
+                                        <constraint firstItem="SI7-DH-ofP" firstAttribute="top" secondItem="HHh-8U-dBO" secondAttribute="top" constant="11" id="J0E-8C-0R1"/>
+                                        <constraint firstAttribute="bottom" secondItem="SI7-DH-ofP" secondAttribute="bottom" constant="11.5" id="KYv-fl-iX4"/>
+                                        <constraint firstAttribute="trailing" secondItem="SI7-DH-ofP" secondAttribute="trailing" constant="7.5" id="Vw8-Ka-ddl"/>
+                                        <constraint firstItem="Pw7-6C-h8w" firstAttribute="top" secondItem="HHh-8U-dBO" secondAttribute="top" constant="5" id="qB4-hJ-O8Z"/>
+                                        <constraint firstItem="SI7-DH-ofP" firstAttribute="leading" secondItem="Pw7-6C-h8w" secondAttribute="trailing" constant="21" id="xt8-QC-Cee"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="6NG-yE-hoP" kind="show" identifier="EditItem" trigger="accessoryAction" id="cnp-uw-3F4"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -54,12 +69,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S9I-QN-FxC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="611" y="-79"/>
+            <point key="canvasLocation" x="609.375" y="-79.225352112676063"/>
         </scene>
         <!--Add Item-->
         <scene sceneID="k0A-PZ-qq3">
             <objects>
-                <tableViewController id="6NG-yE-hoP" customClass="AddItemViewController" customModule="Checklists" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="6NG-yE-hoP" customClass="ItemDetailViewController" customModule="Checklists" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="N7x-RB-7Uo">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -140,6 +155,9 @@
             <point key="canvasLocation" x="-354.375" y="-79.225352112676063"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="cnp-uw-3F4"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

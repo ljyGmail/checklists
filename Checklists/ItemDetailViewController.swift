@@ -7,20 +7,29 @@
 
 import UIKit
 
-protocol AddItemViewControllerDelegate: AnyObject {
-  func addItemViewControllerDidCancel(_ controller: AddItemViewController)
-  func addItemViewController(_ controller: AddItemViewController, didFinihshAdding item: ChecklistItem)
+protocol ItemDetailViewControllerDelegate: AnyObject {
+  func itemDetailViewControllerDidCancel(_ controller: ItemDetailViewController)
+  func itemDetailViewController(_ controller: ItemDetailViewController, didFinihshAdding item: ChecklistItem)
+  func itemDetailViewController(_ controller: ItemDetailViewController, didFinihshEditing item: ChecklistItem)
 }
 
-class AddItemViewController: UITableViewController, UITextFieldDelegate {
+class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
   @IBOutlet weak var textField: UITextField!
   @IBOutlet weak var doneBarButton: UIBarButtonItem!
   
-  weak var delegate: AddItemViewControllerDelegate?
+  weak var delegate: ItemDetailViewControllerDelegate?
+  
+  var itemToEdit: ChecklistItem?
   
   override func viewDidLoad() {
       super.viewDidLoad()
       navigationItem.largeTitleDisplayMode = .never
+    
+      if let item = itemToEdit {
+        title = "Edit Item"
+        textField.text = item.text
+        doneBarButton.isEnabled = true
+      }
     }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -29,14 +38,19 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
   }
   
     @IBAction func cancel() {
-      delegate?.addItemViewControllerDidCancel(self)
+      delegate?.itemDetailViewControllerDidCancel(self)
     }
     
     @IBAction func done() {
-      let item = ChecklistItem()
-      item.text = textField.text!
-      
-      delegate?.addItemViewController(self, didFinihshAdding: item)
+      if let item = itemToEdit {
+        item.text = textField.text!
+        delegate?.itemDetailViewController(self, didFinihshEditing: item)
+      } else {
+        let item = ChecklistItem()
+        item.text = textField.text!
+        
+        delegate?.itemDetailViewController(self, didFinihshAdding: item)
+      }
     }
   
   // MARK: - Table View Delegates

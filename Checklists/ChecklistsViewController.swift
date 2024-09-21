@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ChecklistViewController: UITableViewController, AddItemViewControllerDelegate {
+class ChecklistViewController: UITableViewController, ItemDetailViewControllerDelegate {
   
   var items = [ChecklistItem]()
   
@@ -40,17 +40,27 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
   }
   
   // MARK: - Add Item ViewController Delegates
-  func addItemViewControllerDidCancel(_ controller: AddItemViewController) {
+  func itemDetailViewControllerDidCancel(_ controller: ItemDetailViewController) {
     navigationController?.popViewController(animated: true)
   }
   
-  func addItemViewController(_ controller: AddItemViewController, didFinihshAdding item: ChecklistItem) {
+  func itemDetailViewController(_ controller: ItemDetailViewController, didFinihshAdding item: ChecklistItem) {
     let newRowIndex = items.count
     items.append(item)
     
     let indexPath = IndexPath(row: newRowIndex, section: 0)
     let indexPaths = [indexPath]
     tableView.insertRows(at: indexPaths, with: .automatic)
+    navigationController?.popViewController(animated: true)
+  }
+  
+  func itemDetailViewController(_ controller: ItemDetailViewController, didFinihshEditing item: ChecklistItem) {
+    if let index = items.firstIndex(of: item) {
+      let indexPath = IndexPath(row: index, section: 0)
+      if let cell = tableView.cellForRow(at: indexPath) {
+        configureText(for: cell, with: item)
+      }
+    }
     navigationController?.popViewController(animated: true)
   }
 
@@ -97,18 +107,34 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
     for cell: UITableViewCell,
     with item: ChecklistItem
   ) {
+    let label = cell.viewWithTag(1001) as! UILabel
+    
     if item.checked {
-      cell.accessoryType = .checkmark
+      label.text = "√"
     } else {
-      cell.accessoryType = .none
+      label.text = ""
     }
+  }
+  
+  func configureText(for cell: UITableViewCell,
+                     with item: ChecklistItem) {
+    let label = cell.viewWithTag(1000) as! UILabel
+    label.text = item.text
   }
   
   // MARK: - Navigation
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == "AddItem" {
-      let controller = segue.destination as! AddItemViewController
+      let controller = segue.destination as! ItemDetailViewController
       controller.delegate = self
+    } else if segue.identifier == "EditItem" {
+      let controller = segue.destination as! ItemDetailViewController
+      controller.delegate = self
+      
+      if let indexPath = tableView.indexPath(
+        for: sender as! UITableViewCell) {
+        controller.itemToEdit = items[indexPath.row]
+      }
     }
   }
 }
